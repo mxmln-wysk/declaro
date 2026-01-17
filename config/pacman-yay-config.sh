@@ -1,4 +1,5 @@
 KEEPLISTFILE="/etc/declaro/packages.list"
+MODULELISTFILE="/etc/declaro/modules.list"
 
 # Command to uninstall a package and its dependencies (no confirm/user prompts)
 UNINSTALL_COMMAND () {
