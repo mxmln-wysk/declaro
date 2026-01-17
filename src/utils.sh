@@ -40,7 +40,7 @@ function parse_keepfile {
 
 # Prints the packages in one and not the other, and vice-versa
 function diff_keepfile_installed {
-  diff -u <(parse_keepfile $KEEPLISTFILE) <(LIST_COMMAND | sort) | sed -n "/^[-+][^-+]/p" | sort
+  diff -u <(LIST_COMMAND | sort) <(parse_keepfile $KEEPLISTFILE) | sed -n "/^[-+][^-+]/p" | sort
 }
 
 # Get KEEPLIST pkgs that are not installed
