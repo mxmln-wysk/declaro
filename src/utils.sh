@@ -46,12 +46,12 @@ function diff_keepfile_installed {
 # Get KEEPLIST pkgs that are not installed
 function get_missing_pkgs {
   #have to use same sorting because of hyphens)
-  diff_keepfile_installed | sed -n '/^-/s/^-//p'
+  diff_keepfile_installed | sed -n '/^+/s/^+//p'
 }
 
 # Get installed pkgs not in keeplist.
 function get_stray_pkgs {
-  diff_keepfile_installed | sed -n '/^+/s/^+//p'
+  diff_keepfile_installed | sed -n '/^-/s/^-//p'
 }
 
 # Queries the packages list for the ARGV packages, and returns their state
