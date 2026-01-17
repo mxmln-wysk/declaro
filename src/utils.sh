@@ -21,6 +21,7 @@ function LOAD_DECLAROCONFFILE {
 
 # If KEEPLISTFILE is not set, use the default /etc location
 KEEPLISTFILE=${KEEPLISTFILE:-"${ETC_DECLARO_DIR}/packages.list"}
+MODULELISTFILE=${MODULELISTFILE:-"${ETC_DECLARO_DIR}/modules.list"}
 
 # Set locale to C to make sort consider '-' and '+' as characters
 export LC_COLLATE=C
@@ -38,9 +39,14 @@ function parse_keepfile {
   sed -e 's/#.*$//' -e 's/[ \t]*//g' -e '/^\s*$/d' $1 | sort
 }
 
+function combine_keepfiles {
+  # read modulelist and combine all lists
+  while read -r line; do parse_keepfile  "$ETC_DECLARO_DIR$line"; done <<< $(parse_keepfile $MODULELISTFILE)
+}
+
 # Prints the packages in one and not the other, and vice-versa
 function diff_keepfile_installed {
-  diff -u <(LIST_COMMAND | sort) <(parse_keepfile $KEEPLISTFILE) | sed -n "/^[-+][^-+]/p" | sort
+  diff -u <(LIST_COMMAND | sort) <(combine_keepfiles | sort) | sed -n "/^[-+][^-+]/p" | sort
 }
 
 # Get KEEPLIST pkgs that are not installed
