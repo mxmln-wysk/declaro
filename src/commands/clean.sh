@@ -16,7 +16,7 @@ function remove_stray {
     echo -e "Uninstalling..."
     
 
-    OUTPUT="$(UNINSTALL_COMMAND $STRAY_PKGS 2>&1)"
+    $(UNINSTALL_COMMAND $STRAY_PKGS 2>&1)
     STATUS=$?
 
     if [[ $STATUS -ne 0 ]]; then
@@ -42,7 +42,7 @@ function install_missing {
     echo -e "The following $(echo $MISSING_PKGS | wc -w) package(s) are missing (declared in packages.list but not installed):\n\t$MISSING_PKGS"
     echo -e "Installing..."
 
-    OUTPUT="$(INSTALL_COMMAND $MISSING_PKGS 2>&1)"
+    INSTALL_COMMAND $MISSING_PKGS 2>&1
     STATUS=$?
 
     if [[ $STATUS -ne 0 ]]; then
