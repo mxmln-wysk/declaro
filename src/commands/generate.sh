@@ -46,5 +46,5 @@ function generate {
   echo "/packages.list" | ${SUDO} tee $MODULELISTFILE > /dev/null
 }
 
-LOAD_DECLAROCONFFILE
+LOAD_DECLARCHCONFFILE
 generate $@

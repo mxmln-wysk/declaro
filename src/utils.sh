@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 
 SUDO=${SUDO:-"sudo"}
-ETC_DECLARO_DIR=${ETC_DECLARO_DIR:-"/etc/declaro"}
-DECLAROCONFFILE=${DECLAROCONFFILE:-"${ETC_DECLARO_DIR}/config.sh"}
+ETC_DECLARCH_DIR=${ETC_DECLARCH_DIR:-"/home/mwysk/.config/declarch"}
+DECLARCHCONFFILE=${DECLARCHCONFFILE:-"${ETC_DECLARCH_DIR}/config.sh"}
 SHRDIR=$(realpath "$(dirname $BASH_SOURCE)/../..")
 
-function LOAD_DECLAROCONFFILE {
-  if [ ! -f "$DECLAROCONFFILE" ] && [ "$DECLAROCONFFILE" = "/etc/declaro/config.sh" ]; then
-    echo "Error: Missing config file at \"/etc/declaro/config.sh\"." >&2
+function LOAD_DECLARCHCONFFILE {
+  if [ ! -f "$DECLARCHCONFFILE" ] && [ "$DECLARCHCONFFILE" = "/home/mwysk/Dokumente/declaro-test/.config/declarch/config.sh" ]; then
+    echo "Error: Missing config file at \"/home/mwysk/.config/declarch/config.sh\"." >&2
     echo "To fix this, either install the correct configuration:" >&2
-    echo -e "\tsudo install -Dm644 $SHRDIR/declaro/config/<your-config-file>.sh /etc/declaro/config.sh" >&2
+    echo -e "\tsudo install -Dm644 $SHRDIR/declarch/config/<your-config-file>.sh /home/mwysk/.config/declarch/config.sh" >&2
     echo "Or if there isn't a correct one, create one based on our provided template:" >&2
-    echo -e "\tsudo install -Dm644 $SHRDIR/declaro/config/template-config.sh /etc/declaro/config.sh" >&2
+    echo -e "\tsudo install -Dm644 $SHRDIR/declarch/config/template-config.sh /home/mwysk/.config/declarch/config.sh" >&2
     exit 1
   else
     # If the config file exists or is a custom path, use it
-    source "$DECLAROCONFFILE" 2>/dev/null
+    source "$DECLARCHCONFFILE" 2>/dev/null
   fi
 }
 
 # If KEEPLISTFILE is not set, use the default /etc location
-KEEPLISTFILE=${KEEPLISTFILE:-"${ETC_DECLARO_DIR}/packages.list"}
-MODULELISTFILE=${MODULELISTFILE:-"${ETC_DECLARO_DIR}/modules.list"}
+KEEPLISTFILE=${KEEPLISTFILE:-"${ETC_DECLARCH_DIR}/packages.list"}
+MODULELISTFILE=${MODULELISTFILE:-"${ETC_DECLARCH_DIR}/modules.list"}
 
 # Set locale to C to make sort consider '-' and '+' as characters
 export LC_COLLATE=C
@@ -29,7 +29,7 @@ export LC_COLLATE=C
 function ASSERT_KEEPFILE_EXISTS {
   if [ ! -f $KEEPLISTFILE ]; then
     echo "Error: Missing packages.list at \"$KEEPLISTFILE\"." >&2
-    echo "To fix this error, run 'declaro generate' to create a new packages.list." >&2
+    echo "To fix this error, run 'declarch generate' to create a new packages.list." >&2
     exit 1
   fi
 }
@@ -41,12 +41,13 @@ function parse_keepfile {
 
 function combine_keepfiles {
   # read modulelist and combine all lists
-  while read -r line; do parse_keepfile  "$ETC_DECLARO_DIR$line"; done <<< $(parse_keepfile $MODULELISTFILE)
+  while read -r line; do parse_keepfile  "$ETC_DECLARCH_DIR$line"; done <<< $(parse_keepfile $MODULELISTFILE)
 }
 
 # Prints the packages in one and not the other, and vice-versa
 function diff_keepfile_installed {
   diff -u <(LIST_COMMAND | sort) <(combine_keepfiles | sort) | sed -n "/^[-+][^-+]/p" | sort
+  
 }
 
 # Get KEEPLIST pkgs that are not installed

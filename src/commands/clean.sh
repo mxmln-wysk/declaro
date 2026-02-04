@@ -47,7 +47,7 @@ function install_missing {
 
     if [[ $STATUS -ne 0 ]]; then
       echo -e "Manual intervention required. There was an error while installing:\n"
-      echo -e "=== START OUTPUT ===\n$OUTPUT\n=== END OUTPUT ==="
+      #echo -e "=== START OUTPUT ===\n$OUTPUT\n=== END OUTPUT ==="
       RETURN_CODE=1
     else
       echo -e "Done."
@@ -59,7 +59,7 @@ function install_missing {
 }
 
 function main {
-  LOAD_DECLAROCONFFILE
+  LOAD_DECLARCHCONFFILE
   ASSERT_KEEPFILE_EXISTS
   remove_stray
   printf "\n"

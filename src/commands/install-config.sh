@@ -5,7 +5,7 @@ SHRBINDIR=${SHRBINDIR:-"$(dirname $BASH_SOURCE)"}
 SHRCONFDIR="${SHRBINDIR}/../config"
 source $SHRBINDIR/utils.sh
 
-#this command is the only declaro subcommand that can also be called from Makefile
+#this command is the only declarch subcommand that can also be called from Makefile
 IS_CALLED_AS_SUBCOMMAND=${IS_CALLED_AS_SUBCOMMAND:-"true"}
 
 # 'name              ; requirements for a config_file         ; config_file'
@@ -32,7 +32,7 @@ function detect_and_install_config {
       echo "Detected package manager setup: $NAME"
 
       echo "Installing config file $CONFFILE..."
-      ${SUDO} install -Dm644 "$SHRCONFDIR/$CONFFILE" ${ETC_DECLARO_DIR}/config.sh
+      ${SUDO} install -Dm644 "$SHRCONFDIR/$CONFFILE" ${ETC_DECLARCH_DIR}/config.sh
       return 0
     fi
   done
@@ -43,8 +43,8 @@ function detect_and_install_config {
 
 function install-config_as_subcommand {
   # Check if something will be overwritten
-  if [ "$(ls -A $ETC_DECLARO_DIR)" ]; then
-    read -p "This will overwrite your current declared packages and configuration. Consider running 'declaro export' to create a backup first. Proceed? [y/N] " REPLY
+  if [ "$(ls -A $ETC_DECLARCH_DIR)" ]; then
+    read -p "This will overwrite your current declared packages and configuration. Consider running 'declarch export' to create a backup first. Proceed? [y/N] " REPLY
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
       echo "Operation canceled - no changes were made."
       exit 0
@@ -54,14 +54,14 @@ function install-config_as_subcommand {
   if detect_and_install_config; then
     ${SUDO} rm $KEEPLISTFILE 2> /dev/null
   else
-    echo "Error: declaro does not provide a config file for your distro - configuration was not installed." >&2
+    echo "Error: declarch does not provide a config file for your distro - configuration was not installed." >&2
     exit 1
   fi
 }
 
 function install-config_as_make {
   detect_and_install_config || {
-    echo "Warning: declaro does not provide a config file for your distro - configuration was not installed." >&2
+    echo "Warning: declarch does not provide a config file for your distro - configuration was not installed." >&2
     exit 0
   }
 }

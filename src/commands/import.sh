@@ -4,7 +4,7 @@ SHRBINDIR=$(dirname $BASH_SOURCE)
 source $SHRBINDIR/utils.sh
 
 function extract_from_source {
-  EXTRACTED_SOURCE=$(mktemp -d -t declaro-import.XXXXXXXX)
+  EXTRACTED_SOURCE=$(mktemp -d -t declarch-import.XXXXXXXX)
   trap "rm -rf \"${EXTRACTED_SOURCE}\"" EXIT
 
   if [[ -f "$1" && $(file "$1") =~ "gzip" ]]; then
@@ -23,15 +23,15 @@ function extract_from_source {
 
   else
     echo "Error: Invalid source format. Must be a .tar.gz file or a Git repository URL." >&2
-    echo "Usage: declaro import <source>" >&2
+    echo "Usage: declarch import <source>" >&2
     exit 1
   fi
 }
 
 function import {
   # Check if something will be overwritten
-  if [ "$(ls -A $ETC_DECLARO_DIR)" ]; then
-    read -p "This will overwrite your current declared packages and configuration. Consider running 'declaro export' to create a backup first. Proceed? [y/N] " REPLY
+  if [ "$(ls -A $ETC_DECLARCH_DIR)" ]; then
+    read -p "This will overwrite your current declared packages and configuration. Consider running 'declarch export' to create a backup first. Proceed? [y/N] " REPLY
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
       echo "Operation canceled - no changes were made."
       exit
@@ -40,7 +40,7 @@ function import {
 
   extract_from_source "$1"
 
-  ${SUDO} cp -r ${EXTRACTED_SOURCE}/* $ETC_DECLARO_DIR
+  ${SUDO} cp -r ${EXTRACTED_SOURCE}/* $ETC_DECLARCH_DIR
   echo -e "New packages.list:\n\t$(parse_keepfile $KEEPLISTFILE | xargs) "
 
   echo "Done."
@@ -49,7 +49,7 @@ function import {
 function main {
   if [ -z "$1" ]; then
     echo "Error: No source specified." >&2
-    echo "Usage: declaro import <source>" >&2
+    echo "Usage: declarch import <source>" >&2
     exit 1
   fi
 

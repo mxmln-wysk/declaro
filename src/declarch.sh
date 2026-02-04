@@ -1,9 +1,9 @@
 #!/bin/bash
 
-SHRBINDIR=$(dirname $BASH_SOURCE)/../share/declaro/bin
+SHRBINDIR=$(dirname $BASH_SOURCE)/../share/declarch/bin
 
 function show_help {
-  echo "Usage: declaro [command] [args]"
+  echo "Usage: declarch [command] [args]"
   echo "Commands:"
   echo "  install-config             Detect and install correct configuration for your package manager"
   echo "  clean                      Reset state to declared"

@@ -3,9 +3,10 @@ SUDO ?= sudo
 PREFIX ?= /usr/local
 BINDIR = $(PREFIX)/bin
 SHRDIR = $(PREFIX)/share
-SHRBINDIR = $(SHRDIR)/declaro/bin
-SHRCONFDIR = $(SHRDIR)/declaro/config
-ETC_DECLARO_DIR = /etc/declaro
+SHRBINDIR = $(SHRDIR)/declarch/bin
+SHRCONFDIR = $(SHRDIR)/declarch/config
+ETC_DECLARCH_DIR = /home/mwysk/.config/declarch
+
 
 .PHONY: all install uninstall test
 
@@ -13,8 +14,8 @@ all:
 	@echo "Usage: make [install|uninstall]"
 
 install:
-	@echo "Installing declaro..."
-	$(SUDO) install -Dm755 src/declaro.sh $(DESTDIR)$(BINDIR)/declaro
+	@echo "Installing declarch..."
+	$(SUDO) install -Dm755 src/declarch.sh $(DESTDIR)$(BINDIR)/declarch
 	$(SUDO) install -Dm644 src/commands/clean.sh $(DESTDIR)$(SHRBINDIR)/clean.sh
 	$(SUDO) install -Dm644 src/commands/diff.sh $(DESTDIR)$(SHRBINDIR)/diff.sh
 	$(SUDO) install -Dm644 src/commands/edit.sh $(DESTDIR)$(SHRBINDIR)/edit.sh
@@ -32,17 +33,17 @@ install:
 
 install-config:
 	@echo "Installing configuration..."
-	SUDO="$(SUDO) " SHRBINDIR="src" ETC_DECLARO_DIR=$(DESTDIR)$(ETC_DECLARO_DIR) IS_CALLED_AS_SUBCOMMAND="false" bash src/commands/install-config.sh
+	SUDO="$(SUDO) " SHRBINDIR="src" ETC_DECLARCH_DIR=$(DESTDIR)$(ETC_DECLARCH_DIR) IS_CALLED_AS_SUBCOMMAND="false" bash src/commands/install-config.sh
 	@echo "Done."
 
 
 uninstall:
-	@echo "Uninstalling declaro..."
-	$(SUDO) rm -f $(DESTDIR)$(BINDIR)/declaro
-	$(SUDO) rm -rf $(DESTDIR)$(SHRDIR)/declaro
+	@echo "Uninstalling declarch..."
+	$(SUDO) rm -f $(DESTDIR)$(BINDIR)/declarch
+	$(SUDO) rm -rf $(DESTDIR)$(SHRDIR)/declarch
 	@echo "Done."
 
 test:
-	@echo "Testing declaro..."
+	@echo "Testing declarch..."
 	@./test/bats/bin/bats test/test_cases/
 	@echo "Done."
