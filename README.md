@@ -1,7 +1,7 @@
 # declarch - a simple declarative wrapper for any package manager
 
 ## Important Note
-This is a Fork of [declaro](https://github.com/mantinhas/declaro) from [@mantinhas](https://github.com/mantinhas). So all Credit goes to mantinhas. In this Version there are minor Changes. To better to be able to distinguish it better I renamed all from declaro to declarch. But this repo will be shut down in the near future.
+This is a Fork of [declaro](https://github.com/mantinhas/declaro) from [@mantinhas](https://github.com/mantinhas). So all Credit goes to mantinhas. In this Version there are minor Changes. To be able to distinguish it better I renamed all from declaro to declarch. But this repo will be shut down in the near future.
 
 ## Why This Project Exists
 
