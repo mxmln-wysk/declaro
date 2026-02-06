@@ -1,5 +1,5 @@
-KEEPLISTFILE="/etc/declaro/packages.list"
-MODULELISTFILE="/etc/declaro/modules.list"
+KEEPLISTFILE="/home/mwysk/.config/declarch/packages.list"
+MODULELISTFILE="/home/mwysk/.config/declarch/modules.list"
 
 # Command to uninstall a package and its dependencies (no confirm/user prompts)
 UNINSTALL_COMMAND () {

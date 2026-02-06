@@ -6,7 +6,7 @@ DECLARCHCONFFILE=${DECLARCHCONFFILE:-"${ETC_DECLARCH_DIR}/config.sh"}
 SHRDIR=$(realpath "$(dirname $BASH_SOURCE)/../..")
 
 function LOAD_DECLARCHCONFFILE {
-  if [ ! -f "$DECLARCHCONFFILE" ] && [ "$DECLARCHCONFFILE" = "/home/mwysk/Dokumente/declaro-test/.config/declarch/config.sh" ]; then
+  if [ ! -f "$DECLARCHCONFFILE" ] && [ "$DECLARCHCONFFILE" = "/home/mwysk/.config/declarch.config.sh" ]; then
     echo "Error: Missing config file at \"/home/mwysk/.config/declarch/config.sh\"." >&2
     echo "To fix this, either install the correct configuration:" >&2
     echo -e "\tsudo install -Dm644 $SHRDIR/declarch/config/<your-config-file>.sh /home/mwysk/.config/declarch/config.sh" >&2
